@@ -11,8 +11,3 @@ mongoose.connect(
     }
 ).then(() => console.log("Success"))
 .catch((err) => console.log(err));
-
-
-app.listen(3001,() => {
-        console.log("Server Running ");
-    } );
