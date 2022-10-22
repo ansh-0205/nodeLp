@@ -13,8 +13,8 @@ app.use(express.json());
 async function dbConnect()
 {
     let response = await c.connect();
-    let db = response.db('e-commerce');
-    return db.collection('users');
+    let db = response.db('TestDB');
+    return db.collection('user');
 }
 
 //to add products to the db
@@ -23,8 +23,8 @@ router.post("/newUser",(req,res)=>{
     //to make sure none of the inputs are empty
     if(!roles || !name || !email || !password )
     return res.json({error: 'Please fill in all the required details'});
-    const users = new user({roles , name , email , password  })
-    users.save().then(()=>res.json({message:'Successful'})
+    const User = new user({roles , name , email , password  })
+    User.save().then(()=>res.json({message:'Successful'})
     ).catch((err)=>res.json({error: 'Error'}));
 });
 

@@ -13,8 +13,8 @@ app.use(express.json());
 async function dbConnect()
 {
     let response = await c.connect();
-    let db = response.db('e-commerce');
-    return db.collection('products');
+    let db = response.db('TestDB');
+    return db.collection('product');
 }
 
 //to add products to the db
