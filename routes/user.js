@@ -6,19 +6,12 @@ const url = "mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test"
 const {MongoClient} = require('mongodb');
 const c = new MongoClient(url);
 
-require('../dbConnect');
 const user = require('../models/user');
 
 app.use(express.json());
-async function dbConnect()
-{
-    let response = await c.connect();
-    let db = response.db('TestDB');
-    return db.collection('user');
-}
 
-//to add products to the db
-router.post("/newUser",(req,res)=>{
+//to add a new user to the db
+router.post("/newuser",async(req,res)=>{
     const {roles , name , email , password } = req.body;
     //to make sure none of the inputs are empty
     if(!roles || !name || !email || !password )
@@ -28,7 +21,7 @@ router.post("/newUser",(req,res)=>{
     ).catch((err)=>res.json({error: 'Error'}));
 });
 
-//to get products  (to get all users , users with specific name , users with specific roles)
+//to get users  (to get all users , users with specific name , users with specific roles)
 router.get("/users",async(req,res)=>{
     let data = await dbConnect();
     data = await data.find().toArray();
@@ -56,7 +49,7 @@ router.put("/",async(req,res)=>{
     let newData = await data.find({roles:req.params.roles}).toArray();
     res.send(newData);
 });
-//to delete a prod from the db
+//to delete a user from the db
 router.delete("/",async(req,res)=>{
     let data = await dbConnect();
     let response = await data.deleteOne({

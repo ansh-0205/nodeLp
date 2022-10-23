@@ -6,19 +6,11 @@ const url = "mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test"
 const {MongoClient} = require('mongodb');
 const c = new MongoClient(url);
 
-require('../dbConnect');
+
 const product = require('../models/product');
 
-app.use(express.json());
-async function dbConnect()
-{
-    let response = await c.connect();
-    let db = response.db('TestDB');
-    return db.collection('product');
-}
-
 //to add products to the db
-router.post("/newProd",(req,res)=>{
+router.post("/newProd",async(req,res)=>{
     const {productId,productName ,category , description , image , price } = req.body;
     //to make sure none of the inputs are empty
     if(!productId || !productName || !category || !description || !image || !price)
@@ -75,9 +67,9 @@ router.use((req,res,next)=>{
 });
 
 app.use(router);
-app.listen(3000);
+app.listen(3001)
 console.log("Server running on port 3000");
 
-module.exports=router;
+module.exports = router;
 
 

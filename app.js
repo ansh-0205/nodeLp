@@ -12,3 +12,8 @@ mongoose.connect(
 ).then(() => console.log("Success"))
 .catch((err) => console.log(err));
 
+const prodroute = require('./routes/product');
+app.use('/api/product',prodroute);
+
+const userroute = require('./routes/user');
+app.use('/api/user',userroute);
