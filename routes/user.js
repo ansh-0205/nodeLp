@@ -6,6 +6,13 @@ const url = "mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test"
 const {MongoClient} = require('mongodb');
 const c = new MongoClient(url);
 
+
+async function dbConnect(){
+    let res = await c.connect();
+    let db = res.db('test');
+    return db.collection('user');
+}
+
 const user = require('../models/user');
 
 app.use(express.json());

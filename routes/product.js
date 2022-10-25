@@ -5,7 +5,11 @@ const url = "mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test"
 //MongoClient allows making connections with mongodb
 const {MongoClient} = require('mongodb');
 const c = new MongoClient(url);
-
+async function dbConnect(){
+    let res = await c.connect();
+    let db = res.db('test');
+    return db.collection('product');
+}
 
 const product = require('../models/product');
 
@@ -56,8 +60,9 @@ router.put("/",async(req,res)=>{
 //to delete a prod from the db
 router.delete("/",async(req,res)=>{
     let data = await dbConnect();
+    console.log(data);
     let response = await data.deleteOne({
-        productId:req.body.productId
+        productId:req.params.productId
     });
     res.send(response);
 });
