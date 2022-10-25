@@ -4,6 +4,7 @@ const router = express.Router();
 const url = "mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test";
 //MongoClient allows making connections with mongodb
 const {MongoClient} = require('mongodb');
+const { update } = require('../models/product');
 const c = new MongoClient(url);
 
 
@@ -30,39 +31,35 @@ router.post("/newuser",async(req,res)=>{
 
 //to get users  (to get all users , users with specific name , users with specific roles)
 router.get("/users",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find().toArray();
+    const data = await user.find();
     res.send(data);
 });
 router.get("/userName",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find({Name:req.params.Name}).toArray();
+    const data = await user.findOne({Name:req.params.Name});
     res.send(data);
 });
 router.get("/userRoles",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find({roles:req.params.roles}).toArray();
+    const data = await user.findOne({roles:req.params.roles});
     res.send(data);
 });
 
 //to update the db
 router.put("/",async(req,res)=>{
-    let data = await dbConnect();
-    let response = await data.updateOne({
-        roles:req.body.roles},
-        {$set : req.body,
-    })
-    res.send(response);
-    let newData = await data.find({roles:req.params.roles}).toArray();
-    res.send(newData);
+    // let data = await dbConnect();
+    // let response = await data.updateOne({
+    //     roles:req.body.roles},
+    //     {$set : req.body,
+    // })
+    // res.send(response);
+    // let newData = await data.find({roles:req.params.roles}).toArray();
+    // res.send(newData);
+    const data = await user.updateOne({roles:req.body.roles},{$set : req.body});
+    res.send(data);
 });
 //to delete a user from the db
 router.delete("/",async(req,res)=>{
-    let data = await dbConnect();
-    let response = await data.deleteOne({
-        name:req.body.name
-    });
-    res.send(response);
+    const data = await user.deleteOne({name:req.params.name});
+    res.send(data);
 });
 
 router.use((req,res,next)=>{

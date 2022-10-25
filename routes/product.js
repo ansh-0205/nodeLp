@@ -13,36 +13,34 @@ async function dbConnect(){
 
 const product = require('../models/product');
 
+app.use(express.json());
+
 //to add products to the db
 router.post("/newProd",async(req,res)=>{
-    const {productId,productName ,category , description , image , price } = req.body;
+    const { productId , productName ,category , description , image , price } = req.body;
     //to make sure none of the inputs are empty
     if(!productId || !productName || !category || !description || !image || !price)
     return res.json({error: 'Please fill in all the required details'});
-    const prod = new product({productId, productName ,categories , description , image , price })
+    const prod = new product({productId, productName ,category , description , image , price })
     prod.save().then(()=>res.json({message:'Successful'})
     ).catch((err)=>res.json({error: 'Error'}));
 });
 
 //to get products  (to get all prod , prod with specific name , prod with specific Id,prod under specific category)
 router.get("/prod",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find().toArray();
-    res.send(data);
+    const data = await product.find();
+    res.send(data); 
 });
 router.get("/prodName",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find({productName:req.params.productName}).toArray();
+    const data = await product.findOne({productName:req.params.productName});
     res.send(data);
 });
 router.get("/prodId",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find({productId:req.params.productId}).toArray();
+    const data = await product.findOne({productId:req.params.productId});
     res.send(data);
 });
 router.get("/prodCat",async(req,res)=>{
-    let data = await dbConnect();
-    data = await data.find({category:req.params.category}).toArray();
+    const data = await product.findOne({ategory:req.params.category});
     res.send(data);
 });
 
@@ -53,18 +51,14 @@ router.put("/",async(req,res)=>{
         productId:req.body.productId,
         $set : req.body,
     })
-    res.send(response);
+    res.json(response);
     let newData = await data.find({productId:req.params.productId}).toArray();
     res.send(newData);
 });
 //to delete a prod from the db
 router.delete("/",async(req,res)=>{
-    let data = await dbConnect();
-    console.log(data);
-    let response = await data.deleteOne({
-        productId:req.params.productId
-    });
-    res.send(response);
+    const data = await product.deleteOne({ productId:req.params.productId});
+    res.send(data);
 });
 
 router.use((req,res,next)=>{
@@ -72,8 +66,8 @@ router.use((req,res,next)=>{
 });
 
 app.use(router);
-app.listen(3001)
-console.log("Server running on port 3000");
+app.listen(3001);
+console.log("Server running on port 3001");
 
 module.exports = router;
 
