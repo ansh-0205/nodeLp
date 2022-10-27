@@ -1,14 +1,37 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const morgan = require('morgan');
+const dotenv = require('dotenv');
 
-mongo_url="mongodb+srv://Ansh:prasham__2006@cluster0.hv3pq8h.mongodb.net/test";
+dotenv.config();
+
+const userRoute = require('./routes/user');
+const prodRoute = require('./routes/product');
+
+const db = process.env.mongo_url;
+
+app.use(express.json());
+app.use(morgan('tiny'));
+
 
 mongoose.connect(
-    mongo_url,{
+    db,{
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }
 ).then(() => console.log("Success"))
 .catch((err) => console.log(err));
+
+
+app.use('/product',prodRoute);
+
+
+app.use('/user',userRoute);
+
+app.use((req,res,next)=>{
+    res.status(404).send('Error');
+});
+
+
 
