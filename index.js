@@ -9,6 +9,7 @@ dotenv.config();
 const userRoute = require('./routes/user');
 const prodRoute = require('./routes/product');
 
+
 const db = process.env.mongo_url;
 
 app.use(express.json());
@@ -24,6 +25,8 @@ mongoose.connect(
 .catch((err) => console.log(err));
 
 
+
+
 app.use('/product',prodRoute);
 
 
@@ -32,6 +35,4 @@ app.use('/user',userRoute);
 app.use((req,res,next)=>{
     res.status(404).send('Error');
 });
-
-
-
+app.listen(3000);
