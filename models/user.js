@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 dotenv.config();
 const userSchema = new mongoose.Schema({
     roles: {
@@ -18,14 +19,14 @@ const userSchema = new mongoose.Schema({
     email: {
     type: String,
     required:true,
-    unique:[true,'e-mail exists'],
-    lowercase:true,
+    // unique:[true,'e-mail exists'],
+    // lowercase:true,
     
-    validate(value){
-        if(!validator.isEmail(value)){
-            throw new Error('Inavlid e-mail')
-        }
-    }
+    // validate(value){
+    //     if(!validator.isEmail(value)){
+    //         throw new Error('Inavlid e-mail')
+    //     }
+    // }
 
 },
 

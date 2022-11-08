@@ -11,7 +11,7 @@ app.use(express.json());
 
 // for user to register 
 const newuser = async(req,res)=>{
-    try{
+    
         const {roles,name,email,password}=req.body;
     if(!roles || !name || !email || !password)
     return res.status(400).json({error:'Enter required details'});
@@ -20,19 +20,12 @@ const newuser = async(req,res)=>{
         {
             res.status(400).json({message: 'Try to login as this email has already been registered !!'});
         }
-        const hashedPassword =  bcrypt.hash(password,10);
-        const User =  user.create({
-            roles,
-            name,
-            email,
-            password: hashedPassword
-        });
-            const token = jwt.sign({email},process.env.accessToken);
-            return res.status(200).json({message:'Succesful',token: token});
-
-        
+        try{
+            const User = new user(req.body);
+            await User.save();
+            res.status(200).json(User);
        }catch (error) {
-        res.status(400).json({error:'Error'});
+        return res.status(400).json({error:'Error'});
     }
 };
 
@@ -41,10 +34,7 @@ const newuser = async(req,res)=>{
 const userLogin =async(req,res)=>{
         try{
             const {email,password} = req.body;
-            console.log(email);
-            console.log(password);
             const validEmail =  await user.findOne({email:req.body.email});
-            console.log(validEmail);
             if(validEmail)
             {
                 const hashedPassword = await bcrypt.hash(validEmail.password,10);
@@ -52,7 +42,7 @@ const userLogin =async(req,res)=>{
                 
                 if(validPassword)
                 {
-                    const token = jwt.sign({email:req.body.email},process.env.accessToken);
+                    const token = jwt.sign({roles:req.body.roles},process.env.accessToken,{expiresIn:'1d'});
                     return res.status(200).header('Authorization',token).send({
                         user: validEmail,
                         token:token
@@ -60,12 +50,12 @@ const userLogin =async(req,res)=>{
                 }
                 else
                 {
-                    res.status(400).json({message:'Incorrect password'});
+                    res.status(400).json({message:'Incorrect e-mail or password'});
                 }
             }
             else
             {
-                res.status(400).json({message:'Incorrect email'});
+                res.status(400).json({message:'Incorrect e-mail or password'});
             }
         }catch(error){
         res.status(400).json({error:'Error'});
@@ -121,8 +111,6 @@ const deleteUser = async(req,res)=>{
     }
 
 };
-
-
 
 
 module.exports = {
