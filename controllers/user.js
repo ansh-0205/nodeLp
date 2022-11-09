@@ -37,6 +37,7 @@ const userLogin =async(req,res)=>{
             const validEmail =  await user.findOne({email:req.body.email});
             if(validEmail)
             {
+                await validEmail.save();
                 const hashedPassword = await bcrypt.hash(validEmail.password,10);
                 const validPassword = await bcrypt.compare(password,hashedPassword);
                 
@@ -47,6 +48,7 @@ const userLogin =async(req,res)=>{
                         user: validEmail,
                         token:token
                     });
+                    
                 }
                 else
                 {

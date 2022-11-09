@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
+const User = require('../models/user');
 
 const auth = async(req,res,next)=>{
     try{
@@ -18,7 +19,21 @@ const auth = async(req,res,next)=>{
     }catch(error){
         res.status(400).json({error:'Error'});
     }
-
+}
+const admin = async(req,res,next)=>{
+    try{
+       
+            if(validEmail.roles=== 'admin'){
+               next();
+           }
+           else
+           {
+               return res.status(400).json({message :'Not admin'});
+           }
+        }catch(error){
+          return res.status(400).json({error:'Error 404'});
+        }
 }
 
-module.exports={auth};
+
+module.exports={auth,admin};

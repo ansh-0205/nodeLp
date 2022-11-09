@@ -15,10 +15,10 @@ const{
 router.post('/newuser',newuser);
 router.get('/userLogin',userLogin);
 router.get('/users',authentication.auth,users);
-router.get('/userName',userName);
-router.get('/userRoles',userRoles);
-router.patch('/:id',authentication.auth,updateUser);
-router.delete('/:id',authentication.auth,deleteUser);
+router.get('/userName',[authentication.auth,authentication.admin],userName);
+router.get('/userRoles',authentication.auth,authentication.admin,userRoles);
+router.patch('/:id',[authentication.auth,authentication.admin],updateUser);
+router.delete('/:id',authentication.auth,authentication.admin,deleteUser);
 
 
 
