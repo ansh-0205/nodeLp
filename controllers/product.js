@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
-
 
 const product = require('../models/product');
 
@@ -23,8 +21,8 @@ const newProd = async(req,res)=>{
 
 const prod = async(req,res)=>{
     try{
-        const data = await product.find();
-        res.status(200).send(data); 
+        let data = await product.find();
+        res.send(data); 
     }catch(error){
         res.status(400).json({error:'Error'});
     }
@@ -90,7 +88,4 @@ module.exports= {
     prodCat,
     updateProd,
     deleteProd
-};
-
-
-
+}

@@ -17,8 +17,7 @@ router.get('/prodName',prodName);
 router.get('/prodId',prodId);
 router.get('/prodCat',prodCat);
 router.patch('/:id',updateProd);
-router.delete('/:productId',deleteProd);
-app.use(router);
-app.listen(3001);
+router.delete('/:id',deleteProd);
+
 
 module.exports=router;

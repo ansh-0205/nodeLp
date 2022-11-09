@@ -1,9 +1,11 @@
 const express = require('express');
 const router = new express.Router();
 const app = express();
+const authentication = require('../middleware/auth');
 app.use(express.json());
 const{
     newuser,
+    userLogin,
     users,
     userName,
     userRoles,
@@ -11,12 +13,13 @@ const{
     deleteUser
 } = require('../controllers/user');
 router.post('/newuser',newuser);
-router.get('/users',users);
-router.get('/userName',userName);
-router.get('/userRoles',userRoles);
-router.patch('/:id',updateUser);
-router.delete('/:id',deleteUser);
+router.get('/userLogin',userLogin);
+router.get('/users',authentication.auth,users);
+router.get('/userName',[authentication.auth,authentication.admin],userName);
+router.get('/userRoles',authentication.auth,authentication.admin,userRoles);
+router.patch('/:id',[authentication.auth,authentication.admin],updateUser);
+router.delete('/:id',[authentication.auth,authentication.admin],deleteUser);
 
-app.use(router);
-app.listen(3000);
+
+
 module.exports=router;
