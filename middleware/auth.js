@@ -23,7 +23,7 @@ const auth = async(req,res,next)=>{
 const admin = async(req,res,next)=>{
     try{
        
-            if(validEmail.roles=== 'admin'){
+            if(User.roles=== 'admin'){
                next();
            }
            else

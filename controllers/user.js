@@ -35,16 +35,17 @@ const userLogin =async(req,res)=>{
         try{
             const {email,password} = req.body;
             const validEmail =  await user.findOne({email:req.body.email});
+            
             if(validEmail)
             {
-                await validEmail.save();
+                
                 const hashedPassword = await bcrypt.hash(validEmail.password,10);
-                const validPassword = await bcrypt.compare(password,hashedPassword);
+                const validPassword = await bcrypt.compare(password,validEmail.password);
                 
                 if(validPassword)
                 {
-                    const token = jwt.sign({roles:req.body.roles},process.env.accessToken,{expiresIn:'1d'});
-                    return res.status(200).header('Authorization',token).send({
+                    const token = jwt.sign({email:req.body.email},process.env.accessToken,{expiresIn:'1d'});
+                    return res.status(200).header('auth',token).send({
                         user: validEmail,
                         token:token
                     });
@@ -52,7 +53,7 @@ const userLogin =async(req,res)=>{
                 }
                 else
                 {
-                    res.status(400).json({message:'Incorrect e-mail or password'});
+                    res.status(400).json({message:'Incorrect e-mail or password '});
                 }
             }
             else

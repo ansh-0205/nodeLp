@@ -18,7 +18,7 @@ router.get('/users',authentication.auth,users);
 router.get('/userName',[authentication.auth,authentication.admin],userName);
 router.get('/userRoles',authentication.auth,authentication.admin,userRoles);
 router.patch('/:id',[authentication.auth,authentication.admin],updateUser);
-router.delete('/:id',authentication.auth,authentication.admin,deleteUser);
+router.delete('/:id',[authentication.auth,authentication.admin],deleteUser);
 
 
 
