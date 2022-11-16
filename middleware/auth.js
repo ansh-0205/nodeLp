@@ -9,7 +9,9 @@ const auth = async(req,res,next)=>{
         if(header){
             const token = header.split(' ')[1];
             const verifiedToken = jwt.verify(token,process.env.accessToken);
-            req.user=verifiedToken;
+            const user=await User.findOne({email:verifiedToken.email});
+            req.user=user;
+          
             next();
         }
         else

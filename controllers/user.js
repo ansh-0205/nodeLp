@@ -3,6 +3,8 @@ const app = express();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+
+
 dotenv.config();
 
 const user = require('../models/user');
@@ -34,19 +36,26 @@ const newuser = async(req,res)=>{
 const userLogin =async(req,res)=>{
         try{
             const {email,password} = req.body;
-            const validEmail =  await user.findOne({email:req.body.email});
+            const validUser =  await user.findOne({email:email});
+            console.log(validUser);
             
-            if(validEmail)
+            
+            if(validUser)
             {
-                
-                const hashedPassword = await bcrypt.hash(validEmail.password,10);
-                const validPassword = await bcrypt.compare(password,validEmail.password);
+               
+                //const hashedPassword = await bcrypt.hash(validEmail.password,10);
+                const validPassword = await bcrypt.compare(password,validUser.password);
                 
                 if(validPassword)
                 {
-                    const token = jwt.sign({email:req.body.email},process.env.accessToken,{expiresIn:'1d'});
+                    const token = jwt.sign({email:email},process.env.accessToken,{expiresIn:'1d'});
+                    console.log(token);
+                    // validUser.tokens=validUser.tokens.concat({token});
+                    // console.log(validUser);
+                    const savedUser= await user.findByIdAndUpdate({_id:validUser._id}, { $push: { tokens: token } },{new:false} );
+                    console.log(savedUser);
                     return res.status(200).header('auth',token).send({
-                        user: validEmail,
+                        user: savedUser,
                         token:token
                     });
                     
@@ -64,6 +73,21 @@ const userLogin =async(req,res)=>{
         res.status(400).json({error:'Error'});
     }
 };
+
+const logout = async(req,res)=>{
+    try {
+
+        const user=req.user;
+        console.log(user);
+        user.tokens=[];
+        const saved = await user.save();
+        res.status(200).json({message:'Logged out '});
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        
+    }
+}
 
 
 const users = async(req,res)=>{
@@ -123,5 +147,6 @@ module.exports = {
     userName,
     userRoles,
     updateUser,
-    deleteUser
+    deleteUser,
+    logout
 };

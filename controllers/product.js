@@ -1,16 +1,40 @@
 const express = require('express');
+const Product = require('../models/product');
 const app = express();
-
-const product = require('../models/product');
+const multer =  require('multer');
 
 app.use(express.json());
 
+const storage = multer.memoryStorage();
+const upload = multer({storage:storage});
+
+const addImage = async(req,res)=>{
+
+    try
+    {
+        
+        const reqProduct= await Product.findById(req.params.id);
+        console.log(reqProduct);
+        console.log(req.body);
+        console.log(req.file);
+       
+        const image = { data: req.file.buffer, contentType: req.file.mimetype };
+        const productImage= await Product.findByIdAndUpdate(req.params.id ,{images:image[0]} ,{new:false});
+        res.status(201).send({productImage});
+    }
+    catch(error)
+    {
+        res.status(500).send(error);
+    }
+
+}
+
 const newProd = async(req,res)=>{
-    const { productId , productName ,category , description , image , price } = req.body;
+    const {  productName ,category , description , image , price } = req.body;
     //to make sure none of the inputs are empty
-    if(!productId || !productName || !category || !description || !image || !price)
+    if( !productName || !category || !description  || !price)
     return res.status(400).json({error: 'Please fill in all the required details'});
-    const prod = new product({productId, productName ,category , description , image , price });
+    const prod = new Product({ productName ,category , description , image , price });
     try{
         prod.save();
         res.status(200).json({message:'Succesful'});
@@ -87,5 +111,8 @@ module.exports= {
     prodId,
     prodCat,
     updateProd,
-    deleteProd
+    deleteProd,
+    upload,
+    addImage
+
 }

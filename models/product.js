@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-    productId:{type: Number,
-    required: true,
-    unique: [true,'That product Id is already taken']},
+    
 
     productName:{
     type: String,
@@ -18,10 +16,11 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
 },
-    image : {
-    type: String,
-    required: true,
-},
+    images :[ {
+    data: Buffer,
+    contentType:String
+   
+}],
     price : {
     type: Number,
     required: true,
