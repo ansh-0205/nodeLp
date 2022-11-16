@@ -6,6 +6,7 @@ const User = require('../models/user');
 const auth = async(req,res,next)=>{
     try{
         const header = req.headers['auth'];
+        console.log(header);
         if(header){
             const token = header.split(' ')[1];
             const verifiedToken = jwt.verify(token,process.env.accessToken);
