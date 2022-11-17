@@ -5,39 +5,31 @@ const multer =  require('multer');
 
 app.use(express.json());
 
-const storage = multer.memoryStorage();
-const upload = multer({storage:storage});
-
-const addImage = async(req,res)=>{
-
-    try
-    {
+const dashboard=async(req,res)=>{
+    try {
+        const dashproducts = Product.find({owner:req.user.id});
+        console.log(dashproducts);
+        res.status(200).json({Products:dashproducts});
+    } catch (error) {
+        res.status(500).json({error});
         
-        const reqProduct= await Product.findById(req.params.id);
-        console.log(reqProduct);
-        console.log(req.body);
-        console.log(req.file);
-       
-        const image = { data: req.file.buffer, contentType: req.file.mimetype };
-        const productImage= await Product.findByIdAndUpdate(req.params.id ,{images:image[0]} ,{new:false});
-        res.status(201).send({productImage});
     }
-    catch(error)
-    {
-        res.status(500).send(error);
-    }
+    const dashproducts = Product.find({owner:req.user.id});
+    console.log(dashproducts)
 
 }
 
+
 const newProd = async(req,res)=>{
     const {  productName ,category , description , image , price } = req.body;
+    const owner= req.product.id;
     //to make sure none of the inputs are empty
     if( !productName || !category || !description  || !price)
     return res.status(400).json({error: 'Please fill in all the required details'});
-    const prod = new Product({ productName ,category , description , image , price });
+    const prod = new Product({ productName ,category , description , image , price ,owner });
     try{
         prod.save();
-        res.status(200).json({message:'Succesful'});
+        res.status(200).json({message:'Succesful' , product:prod});
     }catch(error){
         res.status(400).json({error:'Error'});
     }
@@ -112,7 +104,6 @@ module.exports= {
     prodCat,
     updateProd,
     deleteProd,
-    upload,
-    addImage
+    
 
 }

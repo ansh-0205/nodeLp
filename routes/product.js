@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const app = express();
 app.use(express.json());
+const authentication = require('../middleware/auth');
 const{ upload,  addImage} = require('../Fileupload/prodImage');
 const {
     newProd,
@@ -11,17 +12,19 @@ const {
     prodCat,
     updateProd,
     deleteProd,
+    dashboard
 } = require('../controllers/product');
 
 
-router.post('/prodImage/:id' ,upload.array('image') , addImage);
-router.post('/newProd',newProd);
-router.get('/prod',prod);
-router.get('/prodName',prodName);
-router.get('/prodId',prodId);
-router.get('/prodCat',prodCat);
-router.patch('/:id',updateProd);
-router.delete('/:id',deleteProd);
+router.post('/prodImage/:id' ,authentication.auth ,upload.array('image') , addImage);
+router.post('/newProd',authentication.auth, newProd);
+router.get('/dashboard' ,authentication.auth, dashboard)
+router.get('/prod',authentication.auth, prod);
+router.get('/prodName', authentication.auth , prodName);
+router.get('/prodId',authentication.auth , prodId);
+router.get('/prodCat',authentication.auth , prodCat);
+router.patch('/:id',authentication.auth , updateProd);
+router.delete('/:id',authentication.auth, deleteProd);
 
 
 module.exports=router;

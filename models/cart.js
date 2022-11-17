@@ -3,14 +3,12 @@ const CartSchema = new mongoose.Schema(
     {
       owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: 'user'
       },
       products: [
         {
-          product: {type: mongoose.Schema.Types.ObjectId ,ref:"product"},
+          product: {type: mongoose.Schema.Types.ObjectId ,ref:'product'},
           quantity: Number,
-          name: String,
-          price: Number
         }
       ],
       modifiedOn: {

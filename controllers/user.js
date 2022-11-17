@@ -52,7 +52,7 @@ const userLogin =async(req,res)=>{
                     console.log(token);
                     // validUser.tokens=validUser.tokens.concat({token});
                     // console.log(validUser);
-                    const savedUser= await user.findByIdAndUpdate({_id:validUser._id}, { $push: { tokens: token } },{new:false} );
+                    const savedUser= await user.findByIdAndUpdate({_id:validUser._id}, { $push: { tokens: token } },{new:true} );
                     console.log(savedUser);
                     return res.status(200).header('auth',token).send({
                         user: savedUser,
