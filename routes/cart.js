@@ -7,7 +7,7 @@ const authentication = require('../middleware/auth');
 
 
 //router.get('/showcart',  );
-router.post('/addtocart/:id/quantity', async(req,res,next)=>{console.log(req.params.id); next();} ,authentication.auth ,addToCart );
+router.post('/addtocart/:quantity/:id', async(req,res,next)=>{console.log(req.params.id); next();} ,authentication.auth ,addToCart );
 //router.get('/deleteitem/:item',  );
 
 module.exports = router;

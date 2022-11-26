@@ -18,7 +18,7 @@ const {
 
 router.post('/prodImage/:id' ,authentication.auth ,upload.array('image') , addImage);
 router.post('/newProd',authentication.auth, newProd);
-router.get('/dashboard' ,authentication.auth, dashboard)
+router.get('/dashboard' ,authentication.auth, dashboard);
 router.get('/prod',authentication.auth, prod);
 router.get('/prodName', authentication.auth , prodName);
 router.get('/prodId',authentication.auth , prodId);

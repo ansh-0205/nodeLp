@@ -3,6 +3,7 @@ const app = express();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const transporter =  require('../config/mail');
 
 
 dotenv.config();
@@ -25,6 +26,15 @@ const newuser = async(req,res)=>{
         try{
             const User = new user(req.body);
             await User.save();
+            const info = await transporter.sendMail({
+                from:process.env.EMAIL_FROM,
+                to:User.email,
+                subject:'Signup Success',
+                text:'Welcome to our store , you have successfully ccreated a new account'
+
+            });
+            console.log(info);
+
             res.status(200).json(User);
        }catch (error) {
         return res.status(400).json({error:'Error'});
