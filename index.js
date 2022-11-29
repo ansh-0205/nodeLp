@@ -9,6 +9,7 @@ dotenv.config();
 const userRoute = require('./routes/user');
 const prodRoute = require('./routes/product');
 const cartRoute = require('./routes/cart');
+const orderRoute = require('./routes/cart');
 
 
 const db = process.env.mongo_url;
@@ -34,6 +35,8 @@ app.use('/product',prodRoute);
 app.use('/user',userRoute);
 
 app.use('/cart',cartRoute);
+
+app.use('/order' , orderRoute);
 
 app.use((req,res,next)=>{
     res.status(404).send('Error');

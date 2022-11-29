@@ -13,10 +13,15 @@ const productSchema = new mongoose.Schema({
     required: true,
 },
 
-    owner:{
+Quantity:{
+    type:Number,
+    required:true
+},
+
+owner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user' 
-          },
+    },
           
     description : {
     type: String,

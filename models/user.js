@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         type:String
     },
+    
     tokens:[
         {
             type:String

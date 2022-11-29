@@ -21,12 +21,12 @@ const dashboard=async(req,res)=>{
 
 
 const newProd = async(req,res)=>{
-    const {  productName ,category , description , image , price } = req.body;
+    const {  productName ,category , description , image , price , Quantity } = req.body;
     const owner= req.product.id;
     //to make sure none of the inputs are empty
-    if( !productName || !category || !description  || !price)
+    if( !productName || !category || !description  || !price || !Quantity)
     return res.status(400).json({error: 'Please fill in all the required details'});
-    const prod = new Product({ productName ,category , description , image , price ,owner });
+    const prod = new Product({ productName ,category , description , image , price ,owner,Quantity });
     try{
         prod.save();
         res.status(200).json({message:'Succesful' , product:prod});
@@ -104,6 +104,7 @@ module.exports= {
     prodCat,
     updateProd,
     deleteProd,
+    dashboard
     
 
 }

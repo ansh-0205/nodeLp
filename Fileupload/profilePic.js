@@ -4,6 +4,7 @@ const multer =  require('multer');
 const cloudinary =  require('cloudinary').v2;
 const app = express();
 const dotenv = require('dotenv');
+const user = require('../models/user');
 
 
 dotenv.config();
@@ -29,6 +30,8 @@ const addProfile = async(req,res)=>{
         
         const result = await cloudinary.v2.uploader.upload(Buffer.from(req.file.buffer).toString('base64'));
         console.log(result);
+        req.user.profilePic = result.secure_url;
+        await user.save();
         return res.status(200).json({
             success: true,
             file: result.secure_url,
