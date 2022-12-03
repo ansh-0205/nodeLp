@@ -37,8 +37,8 @@ orderSchema.post('save' , async function(doc , next){
         const info = await transporter.sendMail({
             from:process.env.EMAIL_FROM,
             to:user.email,
-            subject:'Signup Success',
-            text:'Welcome to our store , you have successfully ccreated a new account'
+            subject:'Order Created',
+            text:'Your order was placed successfully'
     
         });
         console.log(info);
