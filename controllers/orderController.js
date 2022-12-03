@@ -11,7 +11,7 @@ const directOrder=async(req,res)=>{
         if(req.params.Quantity>product.Quantity)
         return res.status(200).json({message:`Only ${product.Quantity} Items are available`});
 
-       const price=product.prize*(Number(req.params.Quantity));
+       const price=product.price*(Number(req.params.Quantity));
         const order=new Order({
             user:req.user._id,
             totalPrize:price,

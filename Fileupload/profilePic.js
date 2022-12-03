@@ -5,6 +5,8 @@ const cloudinary =  require('cloudinary').v2;
 const app = express();
 const dotenv = require('dotenv');
 const user = require('../models/user');
+const dataUri = require('datauri');
+const path =  require('path');
 
 
 dotenv.config();
@@ -22,13 +24,22 @@ cloudinary.config(
 const storage = multer.memoryStorage();
 const upload = multer({storage:storage});
 
+const duri = new dataUri();
+
+const dataurimethod = (req)=>{
+    duri.format(path.extname(req.file.originalname).toString() , req.file.buffer);
+}
+
 const addProfile = async(req,res)=>{
 
     try
     {
         console.log(req.file);
+
+        const file = dataUri(req).content;
+        const result = await cloudinary.v2.uploader.upload(file);
         
-        const result = await cloudinary.v2.uploader.upload(Buffer.from(req.file.buffer).toString('base64'));
+        // const result = await cloudinary.v2.uploader.upload(Buffer.from(req.file.buffer).toString('base64'));
         console.log(result);
         req.user.profilePic = result.secure_url;
         await user.save();

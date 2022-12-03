@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.32.0",
+    "datauri": "^4.1.0",
     "dotenv": "^16.0.3",
     "eslint-config-airbnb": "^19.0.4",
     "express": "^4.18.2",

@@ -45,10 +45,12 @@ orderSchema.post('save' , async function(doc , next){
         next();
         
     } catch (error) {
-        
+        return res.status(500).json({message:error.message});
     }
 
    
 
 
 })
+const order = mongoose.model('order' ,orderSchema);
+module.exports= order;
