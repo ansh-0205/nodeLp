@@ -53,7 +53,14 @@ const showOrders = async(req,res)=>{
     try 
     {
         const userOrder = Order.findOne({user:req.user._id});
-        const detailOrder =  userOrder.populate('product').populate('cart');
+        const detailOrder =  userOrder.populate('product')
+        .populate({
+            path:'cart' ,
+            populate:[
+            {path:'products.product'},
+            {path:'owner'}
+            ]
+    });
         res.status(200).json({orders:detailOrder});
         
     } 
