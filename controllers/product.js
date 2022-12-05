@@ -21,17 +21,20 @@ const dashboard=async(req,res)=>{
 
 
 const newProd = async(req,res)=>{
-    const {  productName ,category , description , image , price , Quantity } = req.body;
-    const owner= req.product.id;
+    try
+    {
+    const {  productName ,category , description , price , Quantity } = req.body;
+    const owner= req.user.id;
     //to make sure none of the inputs are empty
     if( !productName || !category || !description  || !price || !Quantity)
     return res.status(400).json({error: 'Please fill in all the required details'});
-    const prod = new Product({ productName ,category , description , image , price ,owner,Quantity });
-    try{
+    const prod = new Product({ productName ,category , description ,  price ,owner,Quantity });
+    
         prod.save();
         res.status(200).json({message:'Succesful' , product:prod});
-    }catch(error){
-        res.status(400).json({error:'Error'});
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
     }
 };
 

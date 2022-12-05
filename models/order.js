@@ -9,7 +9,7 @@ const orderSchema =  new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
-    price:
+    totalPrice:
     {
         type:Number,
         required :true
@@ -32,8 +32,11 @@ const orderSchema =  new mongoose.Schema({
 )
 orderSchema.post('save' , async function(doc , next){
 
-    try {
-        const user = User.findById(doc.user);
+       //console.log((doc.user.id).toString('base64')) 
+       console.log(this.user._id.toString());
+       console.log('Your document is' ,doc);
+    const user = await User.findById({_id:this.user._id.toString()});
+     console.log(user);
         const info = await transporter.sendMail({
             from:process.env.EMAIL_FROM,
             to:user.email,
@@ -42,15 +45,8 @@ orderSchema.post('save' , async function(doc , next){
     
         });
         console.log(info);
-        next();
         
-    } catch (error) {
-        return res.status(500).json({message:error.message});
-    }
-
-   
-
-
-})
+        next();
+    });
 const order = mongoose.model('order' ,orderSchema);
 module.exports= order;

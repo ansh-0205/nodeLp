@@ -9,7 +9,7 @@ dotenv.config();
 const userRoute = require('./routes/user');
 const prodRoute = require('./routes/product');
 const cartRoute = require('./routes/cart');
-const orderRoute = require('./routes/cart');
+const orderRoute = require('./routes/order');
 
 
 const db = process.env.mongo_url;

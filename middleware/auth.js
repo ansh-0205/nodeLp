@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 const auth = async(req,res,next)=>{
     try{
-        const header = req.headers['auth'];
+        const header = req.headers['authorization'];
         console.log(header);
         if(header){
             const token = header.split(' ')[1];

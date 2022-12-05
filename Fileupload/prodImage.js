@@ -13,7 +13,7 @@ const addImage = async(req,res)=>{
     try
     {
         
-        const reqProduct= await Product.findById(req.params.id);
+        const reqProduct= await Product.findById(req.params._id);
         console.log(reqProduct);
         // console.log(req.body);
         console.log(req.files);
@@ -25,12 +25,12 @@ const addImage = async(req,res)=>{
 
         });
         console.log(img);
-        const productImage= await Product.findByIdAndUpdate({_id:req.params.id} ,{images:img} ,{new:false});
+        const productImage= await Product.findByIdAndUpdate({_id:req.params.id} ,{images:img} ,{new:true});
         res.status(201).send({productImage});
     }
     catch(error)
     {
-        res.status(500).send(error);
+        res.status(500).send({message:error.message});
     }
 }
 module.exports={upload, addImage}

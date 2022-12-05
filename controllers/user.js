@@ -37,7 +37,7 @@ const newuser = async(req,res)=>{
 
             res.status(200).json(User);
        }catch (error) {
-        return res.status(400).json({error:'Error'});
+        return res.status(400).json({error:error.message});
     }
 };
 
