@@ -87,12 +87,14 @@ try{
         {
           //only one item exists delete it
           cart.products.splice(itemIndex ,1);
+          await cart.save();
           return res.status(200).json({message:`Deleted Item  ${cart.products[itemIndex]}`});
         }
         else
         {
           //Multiple items exist ,reduce quantity
-          cart.products[itemIndex].quantity-=Number(1);
+          cart.products[itemIndex].quantity-=1;
+          await cart.save();
           return res.status(200).json({message:`1 item removed, ${cart.products[itemIndex].quantity} remaining`});
         }
 

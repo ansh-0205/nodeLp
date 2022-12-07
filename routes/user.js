@@ -16,7 +16,7 @@ const{
 } = require('../controllers/user');
 
 
-router.post('/profilePic' , upload.single('profile') ,addProfile);
+router.post('/profilePic' ,authentication.auth, upload.single('profile') ,addProfile);
 router.post('/newuser',newuser);
 router.post('/userLogin',userLogin);
 router.post('/logout' ,authentication.auth , logout);

@@ -1,13 +1,12 @@
 const express = require('express');
 const Product = require('../models/product');
 const multer =  require('multer');
-const cloudinary =  require('cloudinary').v2;
+const cloudinary =  require('cloudinary');
 const app = express();
 const dotenv = require('dotenv');
-const user = require('../models/user');
-const dataUri = require('datauri');
-const path =  require('path');
-
+const User = require('../models/user');
+const fs = require('fs');
+const { findByIdAndUpdate } = require('../models/user');
 
 dotenv.config();
 
@@ -21,14 +20,21 @@ cloudinary.config(
     }
 );
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+});
+
+
+
+
+
 const upload = multer({storage:storage});
 
-const duri = new dataUri();
-
-const dataurimethod = (req)=>{
-    duri.format(path.extname(req.file.originalname).toString() , req.file.buffer);
-}
 
 const addProfile = async(req,res)=>{
 
@@ -36,16 +42,20 @@ const addProfile = async(req,res)=>{
     {
         console.log(req.file);
 
-        const file = dataUri(req).content;
-        const result = await cloudinary.v2.uploader.upload(file);
+        // const file = dataUri(req).content;
+        // const result = await cloudinary.v2.uploader.upload(file);
         
-        // const result = await cloudinary.v2.uploader.upload(Buffer.from(req.file.buffer).toString('base64'));
+         const result = await cloudinary.uploader.upload(req.file.path);
         console.log(result);
-        req.user.profilePic = result.secure_url;
-        await user.save();
+        console.log(req.user);
+        fs.unlinkSync(req.file.path);
+        const newUser = await User.findByIdAndUpdate({_id:req.user._id} , {profilePic:result.secure_url} ,{new:true});
+        console.log(newUser);
+        // req.user.profilePic = result.secure_url;
+        // await User.save();
         return res.status(200).json({
-            success: true,
-            file: result.secure_url,
+            message: 'profile picture added',
+            User: newUser,
           });
         
     }
