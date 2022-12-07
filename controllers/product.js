@@ -1,21 +1,40 @@
 const express = require('express');
+const Product = require('../models/product');
 const app = express();
-
-const product = require('../models/product');
+const multer =  require('multer');
 
 app.use(express.json());
 
+const dashboard=async(req,res)=>{
+    try {
+        const dashproducts = Product.find({owner:req.user.id});
+        console.log(dashproducts);
+        res.status(200).json({Products:dashproducts});
+    } catch (error) {
+        res.status(500).json({error});
+        
+    }
+    const dashproducts = Product.find({owner:req.user.id});
+    console.log(dashproducts)
+
+}
+
+
 const newProd = async(req,res)=>{
-    const { productId , productName ,category , description , image , price } = req.body;
+    try
+    {
+    const {  productName ,category , description , price , Quantity } = req.body;
+    const owner= req.user.id;
     //to make sure none of the inputs are empty
-    if(!productId || !productName || !category || !description || !image || !price)
+    if( !productName || !category || !description  || !price || !Quantity)
     return res.status(400).json({error: 'Please fill in all the required details'});
-    const prod = new product({productId, productName ,category , description , image , price });
-    try{
+    const prod = new Product({ productName ,category , description ,  price ,owner,Quantity });
+    
         prod.save();
-        res.status(200).json({message:'Succesful'});
-    }catch(error){
-        res.status(400).json({error:'Error'});
+        res.status(200).json({message:'Succesful' , product:prod});
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
     }
 };
 
@@ -87,5 +106,8 @@ module.exports= {
     prodId,
     prodCat,
     updateProd,
-    deleteProd
+    deleteProd,
+    dashboard
+    
+
 }

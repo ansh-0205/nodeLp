@@ -35,6 +35,17 @@ const userSchema = new mongoose.Schema({
     required:true,
 
 },
+    profilePic:{
+        type:String
+    },
+    
+    tokens:[
+        {
+            type:String
+        }
+    ]
+
+    
 
 },{timestamps:true}
 );
