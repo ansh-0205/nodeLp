@@ -35,9 +35,9 @@ const newuser = async(req,res)=>{
             });
             console.log(info);
 
-            res.status(200).json(User);
+          res.status(200).json(User);
        }catch (error) {
-        return res.status(400).json({error:error.message});
+          res.status(400).json({error:error.message});
     }
 };
 

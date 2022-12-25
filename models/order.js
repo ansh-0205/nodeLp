@@ -30,23 +30,23 @@ const orderSchema =  new mongoose.Schema({
     }
 },{Timestamps:true}
 )
-orderSchema.post('save' , async function(doc , next){
+// orderSchema.post('save' , async function(doc , next){
 
-       //console.log((doc.user.id).toString('base64')) 
-       console.log(this.user._id.toString());
-       console.log('Your document is' ,doc);
-    const user = await User.findById({_id:this.user._id.toString()});
-     console.log(user);
-        const info = await transporter.sendMail({
-            from:process.env.EMAIL_FROM,
-            to:user.email,
-            subject:'Order Created',
-            text:'Your order was placed successfully'
+//        //console.log((doc.user.id).toString('base64')) 
+//        console.log(this.user._id.toString());
+//        console.log('Your document is' ,doc);
+//     const user = await User.findById({_id:this.user._id.toString()});
+//      console.log(user);
+//         const info = await transporter.sendMail({
+//             from:process.env.EMAIL_FROM,
+//             to:user.email,
+//             subject:'Order Created',
+//             text:'Your order was placed successfully'
     
-        });
-        console.log(info);
+//         });
+//         console.log(info);
         
-        next();
-    });
+//         next();
+//     });
 const order = mongoose.model('order' ,orderSchema);
 module.exports= order;

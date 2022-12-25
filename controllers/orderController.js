@@ -57,7 +57,7 @@ const orderCart = async(req,res)=>{
     const cartOrder =  new Order({
         user:req.user.id,
         cart:cart.id,
-        totalPrice:price
+        // totalPrice:price
     });
     console.log(cartOrder);
     async function reducequantity(cart){

@@ -40,8 +40,8 @@ const newProd = async(req,res)=>{
 
 const prod = async(req,res)=>{
     try{
-        let data = await product.find();
-        res.send(data); 
+        let data = await Product.find();
+        res.status(200).send(data); 
     }catch(error){
         res.status(400).json({error:'Error'});
     }
@@ -50,26 +50,17 @@ const prod = async(req,res)=>{
 
 const prodName = async(req,res)=>{
     try{
-        const data = await product.findOne({productName:req.params.productName});
+        const data = await Product.findOne({productName:req.body.productName});
         res.status(200).send(data);
     }catch(error){
         res.status(400).json({error:'Error'});
     }
 };
 
-const prodId = async(req,res)=>{
-    try{
-        const data = await product.findOne({productId:req.params.productId});
-        res.status(200).send(data);
-    }catch(error){
-        res.status(400).json({error:'Error'});
-    }
-
-};
 
 const prodCat = async(req,res)=>{
     try{
-        const data = await product.findOne({ategory:req.params.category});
+        const data = await Product.findOne({category:req.body.category});
         res.status(200).send(data);
     }catch(error){
         res.status(400).json({error:'Error'});
@@ -79,7 +70,7 @@ const prodCat = async(req,res)=>{
 
 const updateProd = async(req,res)=>{
     try{
-        let data = await product.findByIdAndUpdate(req.params.id,req.body);
+        let data = await Product.findByIdAndUpdate(req.params.id,req.body);
         res.status(200).json({message:'Succesfully updated'});
     }catch(error){
         res.status(400).josn({error:'Error'});
@@ -88,7 +79,7 @@ const updateProd = async(req,res)=>{
 
 const deleteProd = async(req,res)=>{
     try{
-        const data = await product.findByIdAndDelete(req.params.id);
+        const data = await Product.findByIdAndDelete(req.params.id);
         res.status(200).send(data);
     }catch(error){
         res.status(400).json({error:'Error'});
@@ -103,7 +94,6 @@ module.exports= {
     newProd,
     prod,
     prodName,
-    prodId,
     prodCat,
     updateProd,
     deleteProd,
