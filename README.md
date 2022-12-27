@@ -26,7 +26,10 @@ To run this project ,set necessary env variables and run the following command i
 
 ## Screenshots
 
-Here are the postman Screenshots
+<img width="1440" alt="Screenshot 2022-12-27 at 2 35 45 PM" src="https://user-images.githubusercontent.com/113439433/209673004-ec519ddb-e7bc-488c-9836-e3f5371172c3.png">
+
+Here are the pos![Uploading Screenshot 2022-12-27 at 2.35.45 PM.png…]()
+tman Screenshots
 
 LOGIN 
 ![image](https://user-images.githubusercontent.com/113584682/206233053-236a9268-ea78-4173-ab95-12356ec8ccf4.png)
