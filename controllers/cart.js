@@ -1,6 +1,5 @@
 const express = require('express');
 const Cart = require('../models/cart');
-const User =  require('../models/user');
 const app = express();
 app.use(express.json());
 

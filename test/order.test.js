@@ -1,12 +1,8 @@
-const  jwt = require('jsonwebtoken')
-const { default: mongoose } = require('mongoose')
+
 const request=require('supertest')
 const app=require('../app')
-const cart = require('../models/cart')
 const Order=require('../models/order')
-const product = require('../models/product')
-const Product = require('../models/product')
-const User=require('../models/user')
+
 const user1={
     _id:'63a728f6c27bc89d895bce51',
     roles:'admin',
@@ -21,7 +17,7 @@ const product1={
     category:'test',
     Quantity:'2',
     description:'test123',
-    price:'50000'
+    price:50000
 }
 const Cart1={
     owner:'63a728f6c27bc89d895bce51',
@@ -45,15 +41,17 @@ beforeEach(async()=>{
 
 test('Should place a direct order ',async()=>{
     await request(app).post('/order/directOrder/63a8467c7a8a174a2749aa54/1')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
-        owner:order1.user
+        user:order1.user,
+        totalPrice:product1.price*1,
+        product:product1._id
     })
     .expect(200)
 })
 test('Should place order from the cart ',async()=>{
     await request(app).post('/order/cartOrder')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         user:order1.user,
         cart:Cart1._id,
@@ -63,7 +61,7 @@ test('Should place order from the cart ',async()=>{
 })
 test('Show orders',async()=>{
     await request(app).get('/order/myOrders')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         user:order1.user,
         cart:Cart1._id

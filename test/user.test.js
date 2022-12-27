@@ -33,21 +33,21 @@ test('Should Login',async()=>{
 })
 test('Should Logout',async()=>{
     await request(app).post('/user/logout')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
 
     })
 })
 test('Should show all users',async()=>{
     await request(app).get('/user/users')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .expect(200)
 })
 
 
 test('Should show user with username',async()=>{
     await request(app).get('/user/userName')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         name:user1.name
     })
@@ -55,7 +55,7 @@ test('Should show user with username',async()=>{
 })
 test('Should show users with a particular role',async()=>{
     await request(app).get('/user/userRoles')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         roles:user1.roles
     })
@@ -63,7 +63,7 @@ test('Should show users with a particular role',async()=>{
 })
 test('Should Update a user ',async()=>{
     await request(app).patch('/user/63a728f6c27bc89d895bce51')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         email:user1.email
     })
@@ -71,7 +71,7 @@ test('Should Update a user ',async()=>{
 })
 test('Should delete a user ',async()=>{
     await request(app).delete('/user/63a728f6c27bc89d895bce51')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         name:user1.name,
         roles:user1.roles,

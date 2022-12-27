@@ -23,20 +23,7 @@ const auth = async(req,res,next)=>{
         res.status(400).json({error:'Error'});
     }
 }
-const admin = async(req,res,next)=>{
-    try{
-       
-            if(User.roles=== 'admin'){
-               next();
-           }
-           else
-           {
-               return res.status(400).json({message :'Not admin'});
-           }
-        }catch(error){
-          return res.status(400).json({error:'Error 404'});
-        }
-}
 
 
-module.exports={auth,admin};
+
+module.exports={auth};

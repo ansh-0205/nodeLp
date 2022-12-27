@@ -24,7 +24,7 @@ beforeEach(async()=>{
 })
 test('Should add a new Product',async()=>{
     await request(app).post('/product/newProd')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         productName:'testProd123',
         owner:'63a728f6c27bc89d895bce51',
@@ -37,15 +37,15 @@ test('Should add a new Product',async()=>{
     .expect(200)
 })
 test('Should show all products ',async()=>{
-    await response(app).get('/product/prod')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
-    .send({})
+    await request(app).get('/product/prod')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .expect(200)
 })
 test('Should show products with a particular product name ',async()=>{
     await request(app).get('/product/prodName')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
+        _id:product1._id,
         productName:product1.productName,
         owner:product1.owner,
         category:product1.category,
@@ -57,8 +57,9 @@ test('Should show products with a particular product name ',async()=>{
 })
 test('Should show with a particular Category ',async()=>{
     await request(app).get('/product/prodCat')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
+        _id:product1._id,
         productName:product1.productName,
         owner:product1.owner,
         category:product1.category,
@@ -70,7 +71,7 @@ test('Should show with a particular Category ',async()=>{
 })
 test('Should Update a product ',async()=>{
     await request(app).patch('/product/63a7efa4275c5f729c1a80c5')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
         productName:product1.productName
     })
@@ -78,8 +79,23 @@ test('Should Update a product ',async()=>{
 })
 test('Should delete a product ',async()=>{
     await request(app).delete('/product/63a7efa4275c5f729c1a80c5')
-    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MTg5OTM4MywiZXhwIjoxNjcxOTg1NzgzfQ.S3olQrwdkBqOo1ZYw7w8yQFirk9pWVh_gquHlHgQPKg')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
     .send({
+        _id:product1._id,
+        productName:product1.productName,
+        owner:product1.owner,
+        category:product1.category,
+        Quantity:product1.Quantity,
+        description:product1.description,
+        price:product1.price
+    })
+    .expect(200)
+})
+test('Should display the dashboard ',async()=>{
+    await request(app).get('/product/dashboard')
+    .set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTY3MjEzMTIyOSwiZXhwIjoxNjcyMjE3NjI5fQ.3M6fdL41De5hQgA1a1tHidH5IkBeSMYQar9lyNipbR0')
+    .send({
+        _id:product1._id,
         productName:product1.productName,
         owner:product1.owner,
         category:product1.category,

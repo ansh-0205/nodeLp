@@ -41,7 +41,7 @@ const newProd = async(req,res)=>{
 const prod = async(req,res)=>{
     try{
         let data = await Product.find();
-        res.status(200).send(data); 
+        return res.status(200).send(data); 
     }catch(error){
         res.status(400).json({error:'Error'});
     }

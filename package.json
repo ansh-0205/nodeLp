@@ -5,10 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "jest --watch"
+    "test": "jest --coverage"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverage":true,
+    "coverageThreshold":{
+      "global": { 
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   },
   "author": "",
   "license": "ISC",

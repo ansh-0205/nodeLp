@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
-dotenv.config();
 const userSchema = new mongoose.Schema({
     roles: {
     type: String,
